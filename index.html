@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link id="linkBootstrap" rel="stylesheet" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css" />
+	<link rel="icon" href="module-img/icon-tiltle.png">
+	<style>
+		p{
+			margin: 1;
+		}
+	</style>
+	</head>
+	<title> CodeKids </title>
+	<script>
+		// get parameters in url
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+				vars[key] = value;
+			});
+			return vars;
+		}
+
+		// global vars
+		let {
+			lang
+		} = getUrlVars()
+		//alert(lang)
+		if(lang){
+			if(lang.length>=3) lang = lang.slice(0 , 2)
+		}
+		
+		if(lang != "ar" && lang != "fr" && lang != "en" && lang != "de" ) lang = "ar"
+
+	</script>
+
+
+	
+</head>
+
+<body onload="getModuleUser();">
+	
+	<div id="publicUser">
+		<nav class="navbar navbar-expand navbar-light bg-warning">
+			<div class="container-fluid d-flex">
+				<a class="navbar-brand ms-2 me-3 d-none d-md-block " href="#"> <img src="module-img/logo Edublockly.png" class="img-fluid m-0" style="width: 130px;" alt=""></a>	
+                <div class="nav-item p-0 m-0">
+					<a id="goback" class="nav-link active me-auto d-none ms-auto" aria-current="page" href="#"><i
+							class="bi bi-house"></i></a>
+				</div>
+				<button id="filterbtn" class="btn btn-warning d-lg-none d-md-none m-0" type="button"
+					data-bs-toggle="collapse" data-bs-target="#filterSideBare" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="bi bi-search"></i>
+				</button>
+				
+			    
+				<ul class="navbar-nav ms-auto me-5 d-flex">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLanguage" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">Language
+						</a>
+						<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLanguage">
+							<li>
+								<a class="dropdown-item" href="index.html?lang=ar">AR</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="index.html?lang=fr">FR</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="index.html?lang=en">EN</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="index.html?lang=de">DE</a>
+							</li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div>
+		</nav>
+		<!-- the main contien the Modules and Side Bare filter -->
+		<main id="main_modules" class="container-fluid mt-2" >
+			<div class="row">
+				<!-- Begin side bare pour filter les module -->
+				<div id="filterSideBare" class="col-lg-3 col-md-4 col-sm-12 d-lg-block d-md-block order-first collapse">
+					<div class="rounded-3 mb-2 mt-2 pt-3">
+						<p id="titreNiveaux" class="fs-5 bg-primary text-light fw-bold fst-italic ps-2">
+							المستوى الدراسي
+						</p>
+						<div class="row pe-3 m-1">
+							<div class="col-6 d-flex ">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="0"
+									id="niveaux_0" />
+								<label class="form-check-label ms-2 d-flex" for="niveaux_0">
+									<p id="label_niveaux_0" class="d-flex"> 0 <div class="fw-light ms-1"> (age 5-6)</div></p>
+									
+								</label>
+							</div>
+							<div class="col-6 d-flex ">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="1"
+									id="niveaux_1" />
+								<label class="form-check-label ms-2 d-flex" for="niveaux_1">
+									<p id="label_niveaux_1" class="d-flex"> 1 <div class="fw-light ms-1"> (age 6-7)</div></p>
+									
+								</label>
+							</div>
+							<div class="col-6 d-flex ">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="1"
+									id="niveaux_2" />
+								<label class="form-check-label ms-2 d-flex" for="niveaux_1">
+									<p id="label_niveaux_2" class="d-flex"> 2 <div class="fw-light ms-1"> (age 7-8)</div></p>
+									
+								</label>
+							</div>
+							<div class="col-6 d-flex ">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="1"
+									id="niveaux_3" />
+								<label class="form-check-label ms-2 d-flex" for="niveaux_3">
+									<p id="label_niveaux_3" class="d-flex"> 3 <div class="fw-light ms-1"> (age 8+)</div></p>
+									
+								</label>
+							</div>
+						</div>
+						<p id="TitreMatier" class="fs-5 bg-primary text-light fw-bold fst-italic ps-2">
+							البرامج التعليمية
+						</p>
+						<div class="row m-1">
+							<div class="col-6">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="TN"
+									id="matiere_TN" />
+								<label class="form-check-label ms-2" for="matiere_TN">
+									<p id="label_matiere_tn">تونس</p>
+								</label>
+							</div>
+							<div class="col-6">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="IT"
+									id="matiere_IT" />
+								<label class="form-check-label ms-2" for="matiere_IT">
+									<p id="label_matiere_it">البرمجة</p>
+								</label>
+							</div>
+							<div class="col-6">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="FR"
+									id="matiere_FR" />
+								<label class="form-check-label ms-2" for="matiere_FR">
+									<p id="label_matiere_FR">FR</p>
+								</label>
+							</div>
+							<div class="col-6">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="EN"
+									id="matiere_EN" />
+								<label class="form-check-label ms-2" for="matiere_EN">
+									<p id="label_matiere_EN">EN</p>
+								</label>
+							</div>
+							<div class="col-6">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="DB"
+									id="matiere_DB" />
+								<label class="form-check-label ms-2" for="matiere_DB">
+									<p id="label_matiere_DB">الرسم</p>
+								</label>
+							</div>
+						</div>
+						<p id="titreConceptInfo" class="fs-5 mt-3 bg-primary text-light fw-bold fst-italic ps-2">
+							مفاهيم البرمجة
+						</p>
+						<div class="row m-1 mt-2">
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="event"
+									id="concept_event"
+									/>
+								<label class="form-check-label ms-2" for="concept_event">
+									<div  
+										id="label_event"
+										href="#"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="الاحداث" 
+										data-bs-content="الحدث هو عبارة عن حركة يقوم بها المستعمل أو شيء آخر  تعلن انطلاق تنفيذ البرمجية."
+									>
+									الاحداث
+								</div>
+									
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="move"
+									id="concept_move" />
+								<label class="form-check-label ms-2" for="concept_move">
+									<div 
+										id="label_sequencement"
+										data-bs-toggle="popover"
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="التسلسل" 
+										data-bs-content="الحلقات هي مجموعة أوامر يقع إعادة تنفيذها عديد المرات إلى حين توفر شرط الانتهاء."
+									>التسلسل</div>
+								</label>
+							</div>
+							
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="debug"
+									id="concept_debug" />
+								<label class="form-check-label ms-2" for="concept_debug">
+									<div
+										id="label_debegage"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="التصحيح" 
+										data-bs-content="التصحيح هو تنفيذ خطوة بخطوة أوامر البرمجية  التي تفضي إلى نتيجة غير مرضية بغية تعديلها."
+									>التصحيح</div>
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="repeat"
+									id="concept_repeat" />
+								<label class="form-check-label ms-2" for="concept_repeat">
+									<div
+										id="label_boucle_simple"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="الحلقات" 
+										data-bs-content="الحلقات هي مجموعة أوامر يقع إعادة تنفيذها عديد المرات إلى حين توفر شرط الانتهاء.										."
+									>الحلقات</div>
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="number"
+									id="concept_number" />
+								<label class="form-check-label ms-2" for="concept_number">
+									<div
+										id="label_number"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="الثوابت" 
+										data-bs-content="الثوابت هي تسمية لقيمة ثابتة لا تتغير أثناء تنفيذ البرمجة و تحدد عادة عند الانطلاق."
+									>الثوابت</div>
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="logic"
+									id="concept_logic" />
+								<label class="form-check-label ms-2" for="concept_logic">
+									<div
+										id="label_logic"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="المنطق" 
+										data-bs-content="المنطق هو عبارة عن اختبار لكتابة معينة لمعرفتها إن كانت صحيحة أو خاطئة."
+									>المنطق</div>
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="variable"
+									id="concept_variable" />
+								<label class="form-check-label ms-2" for="concept_variable">
+									<div
+										id="label_variable"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="المتغيرات" 
+										data-bs-content="المتغيرات هي تسمية لقيمة قابلة للتغيير أثناء تنفيذ البرمجية."
+									>المتغيرات</div>
+								</label>
+							</div>
+							<div class="col-6 mb-3 d-flex">
+								<input onclick="filterModules()" class="form-check-input" type="checkbox" value="function"
+									id="concept_function" />
+								<label class="form-check-label ms-2" for="concept_function">
+									<div
+										id="label_function"
+										data-bs-toggle="popover" 
+										data-bs-placement="top"
+										data-bs-trigger="hover focus"
+										title="اجراءات" 
+										data-bs-content="الاجراء هو عبارة عن مجموعة من التعليمات البرمجية يتم تشغيلها فقط عند الطلب."
+									>اجراءات</div>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<!-- <img src="module-img/triangle Edublockly.png" class="rounded w-100 h-100" alt="..."> -->
+						<img src="module-img/triangle Edublockly.png" class="img-fluid p-2" alt="...">
+					</div>
+				</div>
+                <!-- End of side bare pour filter les module -->
+
+				
+				<!-- Begin container to affiche all module exist -->
+				<div class="col-lg-9 col-md-8 bg-light order-lg-first order-md-first" style="zoom: 80%">
+					<div class="container-fluid pt-2">
+						<div id="ModulesContainer" class="row pt-2"></div>
+					</div>
+				</div>
+				<!-- End of container to affiche all module exist -->
+
+				
+			</div>
+		</main>
+
+		<!-- page affiche les cours d'un module -->
+		<main id="displayOneModule" class="container-fluid d-none">
+			<div class="row">
+				<div id="displayCours"
+					class="col-lg-3 col-md-12 col-sm-12 bg-light mt-1 pt-2 position-relative">
+				</div>
+				<div id="accordionContainer" class="col-lg-9 col-md-12 col-sm-12 bg-light mt-1 pt-2 ">
+					<div class="accordion accordion-flush bg-light" id="questions"></div>
+				</div>
+				
+			</div>
+		</main>
+
+		<!-- modal sigin in and sign up -->
+		<!-- Begin Modal -->
+		<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<!-- part of sigin in modal 
+                is show on click sur sigin in -->
+				<div id="sigin_eleve" class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="LoginEleveModalLabel">تسجيل الدخول التلميذ</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="mb-3">
+								<label class="form-label" id="label_matEleve">معرف التلميذ</label>
+								<input type="text" class="form-control" id="matEleve" name="matEleve"
+									placeholder="معرف التلميذ" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" id="label_pswEleve">كلمة السر</label>
+								<input type="password" class="form-control" id="pswEleve" name="pswEleve"
+									placeholder="كلمة السر" />
+							</div>
+							<!-- <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" />
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div> -->
+							<div class="modal-footer d-block mt-5">
+								<p class="float-start">
+									<a href="#" id="linkDisplayFormulaireEnseignant"
+										onclick="afficheSiginُEnseignantModal()">معلم</a>
+								</p>
+								<button type="button" onclick="connectEleve()"
+									class="btn btn-warning float-end" id="btnConnectEleve">
+									الدخول
+								</button>
+								<button id="btnshowdemandeEleve" onclick="afficheDemandeeleveModal()" type="button" class="btn btn-primary float-end">
+									طلب تسجيل تلميذ
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- part of sigin up modal 
+                is show on click sur sigin up after open modal -->
+				<div id="sigin_enseignant" class="modal-content d-none">
+					<div class="modal-header">
+						<h5 class="modal-title" id="LoginEnseignantModalLabel">
+							تسجيل الدخول المعلم
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="mb-3">
+								<label class="form-label" id="label_email">البريد الالكتروني</label>
+								<input type="text" class="form-control" id="email" name="email"
+									placeholder="البريد الالكتروني" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" id="label_password">كلمة السر</label>
+								<input type="password" class="form-control" id="password" name="password"
+									placeholder="كلمة السر" />
+							</div>
+
+							<div class="modal-footer d-block mt-5">
+								<p class="float-start">
+									<a href="#" id="linkDispalyFormulaireLoginEleve"
+										onclick="afficheSigineleveModal()">تلميذ</a>
+								</p>
+								<button type="button" onclick="connectEnseignant()"
+									class="btn btn-warning float-end" id="btnLoginEnseignant">
+									الدخول
+								</button>
+								<button onclick="afficheDemandeEnseignantModal()" id="btnshowdemandeEnseignant" type="button" class="btn btn-primary float-end">
+									طلب تسجيل معلم
+								</button>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div id="demandeEleve" class="modal-content d-none">
+					<div class="modal-header">
+						<h5 class="modal-title" id="demandeEleveTitle">
+				 			طلب تسجيل تلميذ 
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="demandeEleve">
+							<div class="mb-3">
+								<label class="form-label" id="label_demandeEleveEmail">البريد الالكتروني</label>
+								<input type="text" class="form-control" id="demandeEleveEmail" name="matEleve"
+									placeholder="البريد الالكتروني" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" id="label_demandeEleveTel">رقم الهاتف</label>
+								<input type="text" class="form-control" id="demandeEleveTel" name="pswEleve"
+									placeholder="رقم الهاتف" />
+							</div>
+							<div class="mb-4">
+								<label class="form-label" id="label_demandeEleveName">الاسم و اللقب</label>
+								<input type="text" class="form-control" id="demandeEleveName" name="pswEleve"
+									placeholder="الاسم و اللقب" />
+							</div>
+							
+							<select class="form-select mb-4" aria-label="Default select example" id="demandeEleveLevel">
+								<option id="label_demandeEleveLevel" value="" selected>
+									المستوى
+								</option>
+								<option value="0" >0 <div class="fw-light ms-1"> (age 5-6)</div> </option>
+								<option value="1" >1 <div class="fw-light ms-1"> (age 6-7)</div> </option>
+								<option value="2" >2 <div class="fw-light ms-1"> (age 7-8)</div></option>
+								<option value="3" >3 <div class="fw-light ms-1"> (age 8+)</div></option>
+							</select>
+							
+							<div class="row mt-3 mb-2">
+								<div class="form-check col-3 ms-3">
+									<input class="form-check-input" type="checkbox" value="TN" id="demandeEleveTN">
+									<label class="form-check-label" for="demandeTN">
+									  TN
+									</label>
+								  </div>
+								<div class="form-check col-3">
+									<input class="form-check-input" type="checkbox" value="FR" id="demandeEleveFR">
+									<label class="form-check-label" for="demandeFR">
+										FR
+									</label>
+								</div>
+								<div class="form-check col-5">
+									<input class="form-check-input" type="checkbox" value="Coding Blocks" id="demandeEleveCB">
+									<label class="form-check-label" for="demandeCB">
+										Coding Blocks
+									</label>
+								</div>
+								<div class="form-check col-3 mt-1 ms-3">
+									<input class="form-check-input" type="checkbox" value="EN" id="demandeEleveEN">
+									<label class="form-check-label" for="demandeEleveEN">
+										EN
+									</label>
+								</div>
+								<div class="form-check col-5 mt-1">
+									<input class="form-check-input" type="checkbox" value="DB" id="demandeEleveDB">
+									<label class="form-check-label" for="demandeEleveDB">
+										Drawing BLocks
+									</label>
+								</div>
+
+							</div>
+							
+							<div class="modal-footer d-block mt-5">
+								<button id="btnshowdemandeSigineleve" onclick="afficheSigineleveModal()" type="button" class="btn btn-primary">
+									تسجيل دخول التلميذ
+								</button>
+								<button type="button"  onclick="SaveDemandeEleveModal()"
+									class="btn btn-warning float-end" id="btnDemandeEleve">ارسال الطلب</button>
+							</div>
+
+						</form>
+					</div>
+				</div>
+				<!-- part of sigin up modal 
+                is show on click sur sigin up after open modal -->
+				<div id="demandeEnseignant" class="modal-content d-none">
+					<div class="modal-header">
+						<h5 class="modal-title" id="demandeENTitle">
+							طلب تسجيل معلم
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="demandeEnseignant" class="row">
+							<div class=" col-12 mb-3">
+								<label class="form-label" id="label_demandeEmailEnseignant">البريد الالكتروني</label>
+								<input type="text" class="form-control" id="demandeEmailEnseignant" name="matEleve"
+									placeholder="xxxxxxx@yyyyy.zz" onchange="this.classList.remove('is-invalid')"/>
+							</div>
+							<div class="col-6 mb-3">
+								<label class="form-label" id="label_demandeTelEnseignant">رقم الهاتف</label>
+								<input type="text" class="form-control" id="demandeTelEnseignant" name="pswEleve"
+									placeholder="رقم الهاتف" />
+							</div>
+							<div class="col-6 mb-3">
+								<label class="form-label" id="label_demandeNameEnseignant">الاسم و اللقب</label>
+								<input type="text" class="form-control" id="demandeNameEnseignant" name="pswEleve"
+									placeholder="الاسم و اللقب" />
+							</div>
+							<div class="mb-3 ">
+								<label class="form-label" id="label_demandeNameES"> اسم المؤسسة التعليمية</label>
+								<input type="text" class="form-control" id="demandeNameES" name="pswEleve"
+									placeholder=" اسم المؤسسة التعليمية" />
+							</div>
+							<div class="form-check col-3 ms-3">
+								<input class="form-check-input" type="checkbox" value="TN" id="demandeTN">
+								<label class="form-check-label" for="demandeTN">
+								  TN
+								</label>
+							  </div>
+							<div class="form-check col-3">
+							<input class="form-check-input" type="checkbox" value="FR" id="demandeFR">
+							<label class="form-check-label" for="demandeFR">
+								FR
+							</label>
+							</div>
+							<div class="form-check col-5">
+								<input class="form-check-input" type="checkbox" value="Coding Blocks" id="demandeCB">
+								<label class="form-check-label" for="demandeCB">
+									Coding Blocks
+								</label>
+							</div>
+							<div class="form-check col-3 mt-1 ms-3">
+								<input class="form-check-input" type="checkbox" value="EN" id="demandeEN">
+								<label class="form-check-label" for="demandeEN">
+									EN
+								</label>
+							</div>
+							<div class="form-check col-5 mt-1">
+								<input class="form-check-input" type="checkbox" value="DB" id="demandeDB">
+								<label class="form-check-label" for="demandeDB">
+									Drawing BLocks
+								</label>
+							</div>
+							<div class="col-12 mb-3 mt-3">
+								<label class="form-label" id="label_demandeNbrEleve"> عدد الطلاب لكل مستوى</label>
+								<div class="row">
+									<div class="col-6 mb-2 d-flex">
+										<input type="number" class="form-control" id="level0" name="pswEleve"placeholder="0(age 5-6)" />
+									</div>
+									<div class="col-6 mb-2">
+										<input type="number" class="form-control" id="level1" name="pswEleve"placeholder="1(age 6-7)" />
+									</div>
+									<div class="col-6 mb-2">
+										<input type="number" class="form-control" id="level2" name="pswEleve"placeholder="2(age 7-8)" />
+									</div>
+									<div class="col-6 mb-2">
+										<input type="number" class="form-control" id="level3" name="pswEleve"placeholder="2(age 8+)" />
+									</div>
+								</div>
+							</div>
+							
+							<!-- <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" />
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div> -->
+							<div class="modal-footer d-block mt-5">
+								<button id="btnshowdemandeSiginEnseignant" onclick="afficheSiginُEnseignantModal()" type="button" class="btn btn-primary">
+									تسجيل دخول معلم
+								</button>
+								<button type="button" onclick="saveDemandeُEnseignantModal()"
+									class="btn btn-warning float-end" id="btnDemandeEnseignant">
+									ارسال
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Begin Modal -->
+
+		
+	</div>
+	<footer></footer>
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="redirect.js"></script>
+<script src="user.js"></script>
+<script src="module.js"></script>
+<script src="displayModule.js"></script>
+<script src="cours.js"></script>
+<script src="translate.js"></script>
+</html>
